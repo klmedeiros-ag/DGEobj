@@ -20,11 +20,13 @@
 #' @export
 getItems <- function(dgeObj, itemNames){
 
-    assert_that(!missing(dgeObj),
-                !missing(itemNames),
-                "DGEobj" %in% class(dgeObj),
-                any(c("character", "list") %in% class(itemNames))
-    )
+    assertthat::assert_that(!missing(dgeObj),
+                            !missing(itemNames),
+                            msg = "Be sure to specify a DGEobj and at least one itemName to retrieve.")
+    assertthat::assert_that("DGEobj" %in% class(dgeObj),
+                            msg = "The DGEobj must be of class 'DGEobj'.")
+    assertthat::assert_that(any(c("character", "list") %in% class(itemNames)),
+                            msg = "Pass the itemNames as a single character string or a list of items to retrieve.")
 
     idx <- itemNames %in% names(dgeObj)
     result <- list()
@@ -66,11 +68,15 @@ getItems <- function(dgeObj, itemNames){
 getItem <- function(dgeObj, itemName){
     assertthat::assert_that(!missing(dgeObj),
                             !missing(itemName),
-                            "DGEobj" %in% class(dgeObj),
-                            class(itemName) == "character",
+                            msg = "Be sure to specify a DGEobj and an itemName to retrieve.")
+    assertthat::assert_that("DGEobj" %in% class(dgeObj),
+                            msg = "The DGEobj must be of class 'DGEobj'.")
+    assertthat::assert_that(class(itemName) == "character",
                             length(itemName) == 1,
-                            itemName %in% names(dgeObj)
-    )
+                            msg = "The itemName should be a character string and contain the name of only one item to retrieve.
+                             To retrieve multiple items, use the getItems() function.")
+    assertthat::assert_that(itemName %in% names(dgeObj),
+                            msg = "The requested itemName should be in the DGEobj. Use names(dgeObj) to see the available items.")
     return(dgeObj[[itemName]])
 }
 
@@ -182,10 +188,13 @@ getBaseType <- function(dgeObj, baseType){
 #' @export
 baseType <- function(dgeObj, type){
 
-    assert_that(!missing(dgeObj),
-                !missing(type),
-                class(dgeObj)[[1]] == "DGEobj",
-                class(type)[[1]] == "character")
+    assertthat::assert_that(!missing(dgeObj),
+                            !missing(type),
+                            msg = "Be sure to specify a DGEobj and an item type.")
+    assertthat::assert_that(class(dgeObj)[[1]] == "DGEobj",
+                            msg = "The DGEobj must be of class 'DGEobj'.")
+    assertthat::assert_that(class(type)[[1]] == "character",
+                            msg = "The type must be of class 'character'.")
 
     objDef <- attr(dgeObj, "objDef")
     return(objDef$type[[type]])
