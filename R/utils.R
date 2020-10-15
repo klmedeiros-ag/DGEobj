@@ -153,9 +153,11 @@ print.DGEobj <- function(x, ..., verbose = FALSE) {
 rmItem <- function(dgeObj, itemName){
 
     assertthat::assert_that(class(dgeObj)[[1]] == "DGEobj",
-                            !missing(itemName),
+                            msg = "The DGEobj must be of class 'DGEobj'.")
+    assertthat::assert_that(!missing(itemName),
                             length(itemName) == 1,
-                            class(itemName)[[1]] == "character")
+                            class(itemName)[[1]] == "character",
+                            msg = "The itemName is required, and must be a single itemName passed as a character string. To remove multiple items, use the rmItems() function.")
 
     if (!itemName %in% names(dgeObj))
         stop(paste(itemName, " does not exist within DGEresult.", sep = ""))
@@ -196,7 +198,9 @@ rmItem <- function(dgeObj, itemName){
 rmItems <- function(dgeObj, items){
     assertthat::assert_that(!missing(dgeObj),
                             !missing(items),
-                            "DGEobj" %in% class(dgeObj))
+                            msg = "A DGEobj and a character vector or list of items are required.")
+    assertthat::assert_that("DGEobj" %in% class(dgeObj),
+                            msg = "The DGEobj must be of class 'DGEobj'.")
 
     if ("list" %in% class(items)) items <- unlist(items)
 
@@ -243,7 +247,8 @@ rmItems <- function(dgeObj, items){
 #' @export
 subset.DGEobj <- function(x, ..., row, col, drop = FALSE, debug = FALSE){
 
-    assertthat::assert_that(class(x)[[1]] == "DGEobj")
+    assertthat::assert_that(class(x)[[1]] == "DGEobj",
+                            msg = "The DGEobj must be of class 'DGEobj'.")
 
     # Fill in missing row/col args
     if (missing(row))
@@ -378,7 +383,8 @@ subset.DGEobj <- function(x, ..., row, col, drop = FALSE, debug = FALSE){
 #' @export
 showTypes <- function(dgeObj, pretty = TRUE){
 
-    assert_that(class(dgeObj) == "DGEobj")
+    assertthat::assert_that(class(dgeObj) == "DGEobj",
+                            msg = "The DGEobj must be of class 'DGEobj'.")
 
     df <- as.data.frame(unlist(attr(dgeObj, "objDef")$type), stringsAsFactors = FALSE)
     df$type <- rownames(df)
@@ -420,9 +426,14 @@ newType <- function(dgeObj, itemType, baseType, uniqueItem = FALSE){
 
     result <- FALSE
 
-    assertthat::assert_that(!missing(dgeObj), !missing(itemType),
-                            !missing(baseType), class(dgeObj) == "DGEobj",
-                            baseType %in% baseTypes(dgeObj))
+    assertthat::assert_that(!missing(dgeObj),
+                            !missing(itemType),
+                            !missing(baseType),
+                            msg = "Be sure to specify the DGEobj, itemType, and baseType. All three are required.")
+    assertthat::assert_that(class(dgeObj) == "DGEobj",
+                            msg = "The DGEobj must be of class 'DGEobj'.")
+    assertthat::assert_that(baseType %in% baseTypes(dgeObj),
+                            msg = "The baseType must be one of the baseTypes available in the DGEobj. Use baseTypes(DGEobj) to see which are available.")
 
     attr(dgeObj, "objDef")$type[itemType] <- baseType
     if (uniqueItem == TRUE)
