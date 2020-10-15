@@ -91,7 +91,9 @@ test_that('showTypes successfully shows the types defined in a DGEobj', {
 
     # show types for our obj with pretty = FALSE
     showTypes_notPretty_DGEobj <- DGEobj::showTypes(DGEobj, pretty = FALSE)
-    expect_null(showTypes_notPretty_DGEobj) # investigate this behavior
+    expect_s3_class(showTypes_notPretty_DGEobj, "data.frame")
+    expect_equal(nrow(showTypes_notPretty_DGEobj), 48)
+    expect_equal(ncol(showTypes_notPretty_DGEobj), 2)
 
     # ask for types on an object that doesn't exist
     expect_error(DGEobj::showTypes(DGeobj))
