@@ -392,6 +392,8 @@ showTypes <- function(dgeObj, pretty = TRUE){
     df <- df[, c("Type", "BaseType")]
     if (pretty)
         knitr::kable(df, row.names = FALSE)
+    else
+        df
 }
 
 
