@@ -88,9 +88,11 @@ setAttributes <- function(item, attribs){
 
     assert_that(!missing(item),
                 !missing(attribs),
-                class(attribs)[[1]] == "list",
-                !is.null(names(attribs))
-    )
+                msg = "Be sure to specify an item and the attributes (attribs) to be attached to the item.")
+    assert_that(class(attribs)[[1]] == "list",
+                msg = "attribs must be of class 'list'.")
+    assert_that(!is.null(names(attribs)),
+                msg = "The attribs list should be a named list, specifying the attribute/value pairs. Be sure the names are specified.")
 
     attribNames <- as.list(names(attribs))
     for (i in 1:length(attribs))
