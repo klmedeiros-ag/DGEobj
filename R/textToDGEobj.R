@@ -68,14 +68,16 @@ textToDGEobj <- function(path,
                          design = "RNA-Seq.Design.txt",
                          level,
                          customAttr,
-                         gz=FALSE,
-                         verbose=FALSE){
+                         gz = FALSE,
+                         verbose = FALSE){
 
-  assertthat::assert_that(!missing(path),
-                          !missing(level),
-                          tolower(level) %in% c("gene", "isoform", "exon"))
+    assertthat::assert_that(!missing(path),
+                            !missing(level),
+                            msg = "Be sure to specify a path and a level. Both are required.")
+    assertthat::assert_that(tolower(level) %in% c("gene", "isoform", "exon"),
+                            msg = 'The specified level must be one of "gene", "isoform", or "exon".')
 
-   # Change default filenames if not given and level = isoform
+    # Change default filenames if not given and level = isoform
     if (tolower(level) == "isoform") {
         if (missing(counts))
             counts <- stringr::str_c("RNA-Seq.Transcript_Count.Table.txt")
@@ -87,9 +89,9 @@ textToDGEobj <- function(path,
 
     # Add convenience support for gzipped files
     if (gz == TRUE) {
-      gz <- ".gz"
+        gz <- ".gz"
     } else {
-      gz <- ""
+        gz <- ""
     }
     if (!str_detect(counts, ".gz$")) counts <- stringr::str_c(counts, gz)
     if (!str_detect(seqAnnotation, ".gz$")) seqAnnotation <- stringr::str_c(seqAnnotation, gz)
@@ -98,23 +100,23 @@ textToDGEobj <- function(path,
     # Get the data
     if (verbose) tsmsg("Reading count data...")
     if (file.exists(file.path(path, counts))) {
-      countData <- Txt2DF(file.path(path, counts))
+        countData <- Txt2DF(file.path(path, counts))
     } else {
-      stop(str_c("Couldn't find file: ", counts))
+        stop(str_c("Couldn't find file: ", counts))
     }
 
     if (verbose) tsmsg("Reading seq annotation data...")
     if (file.exists(file.path(path, seqAnnotation))) {
-      seqData <- Txt2DF(file.path(path, seqAnnotation))
+        seqData <- Txt2DF(file.path(path, seqAnnotation))
     } else {
-      stop(str_c("Couldn't find file: ", seqAnnotation))
+        stop(str_c("Couldn't find file: ", seqAnnotation))
     }
 
     if (verbose) tsmsg("Reading seq annotation data...")
     if (file.exists(file.path(path, design))) {
-      designData <- Txt2DF(file.path(path, design))
+        designData <- Txt2DF(file.path(path, design))
     } else {
-      stop("Couldn't find file: ", design)
+        stop("Couldn't find file: ", design)
     }
 
     rownames(designData) <- make.names(rownames(designData))
@@ -137,27 +139,27 @@ textToDGEobj <- function(path,
 
 ### Function Txt2DF ###
 Txt2DF <- function(filename) {
-  # Configured to read Omicsoft .txt files correctly capturing GeneIDs as rownames
-  if (file.exists(filename)) {
-    df = utils::read.table(filename,
-                           sep = "\t",
-                           stringsAsFactors = FALSE,
-                           header = TRUE,
-                           row.names = 1,
-                           comment.char = "",
-                           quote = "",
-                           na.strings = c("NA", "."),
-                           check.names = TRUE)
-    return(df)
-  } else {
-    warning(paste("Warning: File = ", filename, "not found."))
-    return(-1)
-  }
+    # Configured to read Omicsoft .txt files correctly capturing GeneIDs as rownames
+    if (file.exists(filename)) {
+        df = utils::read.table(filename,
+                               sep = "\t",
+                               stringsAsFactors = FALSE,
+                               header = TRUE,
+                               row.names = 1,
+                               comment.char = "",
+                               quote = "",
+                               na.strings = c("NA", "."),
+                               check.names = TRUE)
+        return(df)
+    } else {
+        warning(paste("Warning: File = ", filename, "not found."))
+        return(-1)
+    }
 }
 
 ### Function tsmsg ###
 # A timestamped message
 tsmsg <- function(...) {
-  # Works like message() but prepends a timestamp
-  message(date(), ": ", ...)
+    # Works like message() but prepends a timestamp
+    message(date(), ": ", ...)
 }
