@@ -30,7 +30,9 @@ resetDGEobj <- function(dgeObj, platformType){
     platform.rnaseq <- c("rna-seq", "rnaseq")
 
     assertthat::assert_that("DGEobj" %in% class(dgeObj),
-                            !is.null(attr(dgeObj, "level")))
+                            "The DGEobj must be of class 'DGEobj'.")
+    assertthat::assert_that(!is.null(attr(dgeObj, "level")),
+                            "The DGEobj must have a 'level' attribute specified.")
 
     if (is.null(attr(dgeObj, "PlatformType")))
         stop("Required attribute \"PlatformType\" is missing!  Must use platformType argument.")
