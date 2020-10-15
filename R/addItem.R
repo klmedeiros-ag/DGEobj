@@ -43,15 +43,13 @@ addItem <- function(dgeObj,
                     funArgs = match.call(),
                     itemAttr,
                     parent = "",
-                    init = FALSE,
-                    debug = FALSE) {
+                    init = FALSE) {
 
     assert_that(!missing(dgeObj),
                 !missing(item),
                 !missing(itemName),
-                !missing(itemType))
-
-    if (debug == TRUE) browser()
+                !missing(itemType),
+                msg = "Be sure to specify the DGEobj, item, itemName, and itemType.")
 
     basetype <- baseType(dgeObj, type = itemType)
 
@@ -201,15 +199,20 @@ addItems <- function(dgeObj,
     assert_that(!missing(dgeObj),
                 !missing(itemList),
                 !missing(itemTypes),
-                class(dgeObj)[[1]] == "DGEobj",
+                msg = "Be sure to specify the DGEobj, itemList, and itemTypes.")
+
+    assert_that(class(dgeObj)[[1]] == "DGEobj",
                 class(itemList)[[1]] == "list",
                 class(itemTypes)[[1]] == "list",
-                length(itemList) == length(itemTypes)
-    )
+                msg = "The DGEobj must be of class DGEobj, while the itemList and itemTypes must both be lists.")
+
+    assert_that(length(itemList) == length(itemTypes),
+                msg = "The lenght of the itemList must match the length of the itemTypes.")
 
     if (!missing(parents))
         assert_that(class(parents)[[1]] == "list",
-                    length(parents) == length(itemList))
+                    length(parents) == length(itemList),
+                    msg = "Be sure the parents list specified is of class list and of the same length as the itemList.")
 
     if (!missing(itemAttr)) {
         attrNames <- names(itemAttr)
