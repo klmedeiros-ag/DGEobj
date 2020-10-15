@@ -26,7 +26,6 @@
 #' }
 #'
 #' @import magrittr
-#' @importFrom assertthat assert_that
 #' @importFrom stringr str_detect str_remove_all str_locate
 #' @importFrom utils read.delim
 #'
