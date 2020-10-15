@@ -86,13 +86,13 @@ showAttributes <- function(dgeObj,
 #' @export
 setAttributes <- function(item, attribs){
 
-    assert_that(!missing(item),
-                !missing(attribs),
-                msg = "Be sure to specify an item and the attributes (attribs) to be attached to the item.")
-    assert_that(class(attribs)[[1]] == "list",
-                msg = "attribs must be of class 'list'.")
-    assert_that(!is.null(names(attribs)),
-                msg = "The attribs list should be a named list, specifying the attribute/value pairs. Be sure the names are specified.")
+    assertthat::assert_that(!missing(item),
+                            !missing(attribs),
+                            msg = "Be sure to specify an item and the attributes (attribs) to be attached to the item.")
+    assertthat::assert_that(class(attribs)[[1]] == "list",
+                            msg = "attribs must be of class 'list'.")
+    assertthat::assert_that(!is.null(names(attribs)),
+                            msg = "The attribs list should be a named list, specifying the attribute/value pairs. Be sure the names are specified.")
 
     attribNames <- as.list(names(attribs))
     for (i in 1:length(attribs))
@@ -160,8 +160,8 @@ getAttributes <- function(item,
 #' @importFrom assertthat assert_that
 #'
 getAttribute <- function(item, attrName){
-    assert_that(!missing(item),
-                !missing(attrName))
+    assertthat::assert_that(!missing(item),
+                            !missing(attrName))
 
     x <- attr(item, attrName)
     return(x)
