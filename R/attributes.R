@@ -200,7 +200,8 @@ getAttributes <- function(item,
 #' @export
 getAttribute <- function(item, attrName){
     assertthat::assert_that(!missing(item),
-                            !missing(attrName))
+                            !missing(attrName),
+                            msg = "An item and an attribute name (attrName) are required.")
 
     x <- attr(item, attrName)
     return(x)
