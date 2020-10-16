@@ -20,10 +20,13 @@
 #' @export
 baseType <- function(dgeObj, type){
 
-    assert_that(!missing(dgeObj),
-                !missing(type),
-                class(dgeObj)[[1]] == "DGEobj",
-                class(type)[[1]] == "character")
+    assertthat::assert_that(!missing(dgeObj),
+                            !missing(type),
+                            msg = "Be sure to specify both a DGEobj and a type (to check the baseType). Both are required.")
+    assertthat::assert_that(class(dgeObj)[[1]] == "DGEobj",
+                            msg = "The DGEobj must be of class 'DGEobj'.")
+    assertthat::assert_that(class(type)[[1]] == "character",
+                            msg = "The type must be of class 'character'.")
 
     objDef <- attr(dgeObj, "objDef")
     return(objDef$type[[type]])
@@ -84,7 +87,8 @@ baseTypes <- function(dgeObj){
 #' @export
 showTypes <- function(dgeObj, pretty = TRUE){
 
-    assert_that(class(dgeObj) == "DGEobj")
+    assertthat::assert_that(class(dgeObj) == "DGEobj",
+                            msg = "The DGEobj must be of class 'DGEobj'.")
 
     df <- as.data.frame(unlist(attr(dgeObj, "objDef")$type), stringsAsFactors = FALSE)
     df$type <- rownames(df)
@@ -126,9 +130,14 @@ newType <- function(dgeObj, itemType, baseType, uniqueItem = FALSE){
 
     result <- FALSE
 
-    assertthat::assert_that(!missing(dgeObj), !missing(itemType),
-                            !missing(baseType), class(dgeObj) == "DGEobj",
-                            baseType %in% baseTypes(dgeObj))
+    assertthat::assert_that(!missing(dgeObj),
+                            !missing(itemType),
+                            !missing(baseType),
+                            msg = "Be sure to specify the DGEobj, itemType, and baseType. All three are required.")
+    assertthat::assert_that(class(dgeObj) == "DGEobj",
+                            msg = "The DGEobj must be of class 'DGEobj'.")
+    assertthat::assert_that(baseType %in% baseTypes(dgeObj),
+                            msg = "The baseType must be one of the baseTypes available in the DGEobj. Use baseTypes(DGEobj) to see which are available.")
 
     attr(dgeObj, "objDef")$type[itemType] <- baseType
     if (uniqueItem == TRUE)
