@@ -1,7 +1,7 @@
 context("DGEobj - tests for attributes.R functions")
 
 
-test_that("showAttributes prints the attributes associated with a DEGobj", {
+test_that("showAttributes prints the attributes associated with a DGEobj", {
 
     # capture the console output for DGEobj object and match the length of output
     output <- capture_output_lines(showAttributes(DGEobj))
@@ -11,7 +11,7 @@ test_that("showAttributes prints the attributes associated with a DEGobj", {
     expect_setequal(capture_output_lines(showAttributes(NULL)), c("[1] \"dataName:\"", "[1] \"atnames: \"", "[1] \"dataName:\"", "[1] \"atnames: \""))
 })
 
-test_that("setAttributes set one or more attributes on an object", {
+test_that("setAttributes sets one or more attributes on an object", {
 
     # create arbitrary input to set as attributes in DGEobj
     new_attributes <- list("attribute1" = runif(100, min = 0, max = 2), "attribute2" = LETTERS)
@@ -25,6 +25,20 @@ test_that("setAttributes set one or more attributes on an object", {
     expect_true(exists("attribute1", where = output))
     expect_true(exists("attribute2", where = output))
     expect_setequal(output$attribute2, LETTERS)
+})
+
+test_that("setAttribute sets an attributes on an object", {
+
+    # create arbitrary input to set as an attribute in DGEobj
+    new_dgeobj     <- setAttribute(DGEobj, LETTERS, "new_attribute")
+    output         <- getAttributes(new_dgeobj)
+
+    # attribute type
+    expect_type(output, "list")
+
+    # does set attributes exists in DGEobj?
+    expect_true(exists("new_attribute", where = output))
+    expect_setequal(output$new_attribute, LETTERS)
 })
 
 test_that("getAttributes returns the all attributes", {
