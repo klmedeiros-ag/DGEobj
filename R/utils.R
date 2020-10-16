@@ -128,29 +128,3 @@ inventory <- function(dgeObj, verbose = FALSE)  {
 
     return(df)
 }
-
-
-#' Function print.DGEobj
-#'
-#' Print a DGEobj object.
-#'
-#' @author John Thompson
-#' @keywords RNA-Seq
-#'
-#' @param x A DGEobj object
-#' @param ...     Additional parameters
-#' @param verbose Add funArgs to the output (Default = FALSE)
-#'
-#' @return NULL
-#'
-#' @examples
-#' \dontrun{
-#'     print(myDGEobj)
-#'     print(myDGEobj, verbose = TRUE)
-#' }
-#' @export
-print.DGEobj <- function(x, ..., verbose = FALSE) {
-    df <- inventory(x, verbose = verbose)
-    print(df)
-    return(invisible(x))
-}
