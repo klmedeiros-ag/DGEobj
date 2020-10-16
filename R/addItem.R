@@ -96,7 +96,7 @@ addItem <- function(dgeObj,
                             !missing(item),
                             !missing(itemName),
                             !missing(itemType),
-                            msg = "Be sure to specify the DGEobj, item, itemName, and itemType.")
+                            msg = "Specify the DGEobj, item, itemName, and itemType. All are required.")
     assertthat::assert_that(itemType %in% names(attr(dgeObj, "objDef")$type),
                             msg = "The itemType must be one of the possible types defined in the DGEobj object definition. You can access possible types using names(attr(DGEobj, 'objDef')$type).")
 
@@ -201,7 +201,7 @@ addItems <- function(dgeObj,
     assertthat::assert_that(!missing(dgeObj),
                             !missing(itemList),
                             !missing(itemTypes),
-                            msg = "Be sure to specify the DGEobj, itemList, and itemTypes.")
+                            msg = "Specify the DGEobj, itemList, and itemTypes. All are required.")
     assertthat::assert_that(class(dgeObj)[[1]] == "DGEobj",
                             class(itemList)[[1]] == "list",
                             class(itemTypes)[[1]] == "list",
@@ -212,7 +212,7 @@ addItems <- function(dgeObj,
     if (!missing(parents))
         assertthat::assert_that(class(parents)[[1]] == "list",
                                 length(parents) == length(itemList),
-                                msg = "Be sure the parents list specified is of class list and of the same length as the itemList.")
+                                msg = "The parents list must be of class 'list' and of the same length as the itemList.")
 
     if (!missing(itemAttr)) {
         attrNames <- names(itemAttr)

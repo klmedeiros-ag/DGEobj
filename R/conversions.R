@@ -76,11 +76,11 @@ convertDGEobj <- function(dgeObj, Class) {
 
     assertthat::assert_that(!missing(dgeObj),
                             !missing(Class),
-                            msg = "Be sure to specify a DGEobj and a desired Class to convert the DGEobj to.")
+                            msg = "Specify both a DGEobj and a desired Class to convert the DGEobj to.")
     assertthat::assert_that(class(Class) == "character",
-                            msg = "Be sure to specify the Class via character string" )
+                            msg = "Specify the Class via character string" )
     assertthat::assert_that(toupper(Class) %in% supportedClasses,
-                            msg = 'Be sure the specified class is one of "RangedSummarizedExperiment", "RSE", "ExpressionSet", or "ES".')
+                            msg = 'The specified class must be one of "RangedSummarizedExperiment", "RSE", "ExpressionSet", or "ES".')
 
     allowedLevels <- attr(dgeObj, "objDef")$allowedLevels
     if (!attr(dgeObj, "level") %in% allowedLevels)
@@ -156,9 +156,9 @@ convertRSE <- function(RSE,
 
     assertthat::assert_that(!missing(RSE),
                             !missing(Class),
-                            msg = "Be sure to specify a DGEobj and a desired Class to convert the DGEobj to.")
+                            msg = "Specify both a DGEobj and a desired Class to convert the DGEobj to.")
     assertthat::assert_that(class(RSE)[[1]] == "RangedSummarizedExperiment",
-                            msg = "The RSE must be of class RangedSummarizedExperiment.")
+                            msg = "The RSE must be of class 'RangedSummarizedExperiment'.")
 
     result <- switch(toupper(Class),
                      "DGEOBJ" = .toDGEobj(RSE),

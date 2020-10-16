@@ -52,7 +52,7 @@ initDGEobj <- function(counts,
                             !missing(colData),
                             !missing(rowData),
                             !missing(level),
-                            msg = "Be sure to specify the counts, colData, rowData, and level. All are required to initialize a DGEobj.")
+                            msg = "Specify the counts, colData, rowData, and level. All are required to initialize a DGEobj.")
     assertthat::assert_that(is.matrix(counts) | is.data.frame(counts),
                             msg = "counts must be specified as a matrix or a data.frame.")
     assertthat::assert_that(level %in% DGEobjDef$allowedLevels,

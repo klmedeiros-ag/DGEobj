@@ -22,7 +22,7 @@ getItems <- function(dgeObj, itemNames){
 
     assertthat::assert_that(!missing(dgeObj),
                             !missing(itemNames),
-                            msg = "Be sure to specify a DGEobj and at least one itemName to retrieve.")
+                            msg = "Specify both a DGEobj and at least one itemName to retrieve.")
     assertthat::assert_that("DGEobj" %in% class(dgeObj),
                             msg = "The DGEobj must be of class 'DGEobj'.")
     assertthat::assert_that(any(c("character", "list") %in% class(itemNames)),
@@ -68,7 +68,7 @@ getItems <- function(dgeObj, itemNames){
 getItem <- function(dgeObj, itemName){
     assertthat::assert_that(!missing(dgeObj),
                             !missing(itemName),
-                            msg = "Be sure to specify a DGEobj and an itemName to retrieve.")
+                            msg = "Specify both a DGEobj and an itemName to retrieve.")
     assertthat::assert_that("DGEobj" %in% class(dgeObj),
                             msg = "The DGEobj must be of class 'DGEobj'.")
     assertthat::assert_that(class(itemName) == "character",

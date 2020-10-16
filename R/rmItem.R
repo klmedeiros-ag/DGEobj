@@ -27,7 +27,7 @@ rmItem <- function(dgeObj, itemName){
     assertthat::assert_that(!missing(itemName),
                             length(itemName) == 1,
                             class(itemName)[[1]] == "character",
-                            msg = "Be sure to specify a singular itemName as a character string.")
+                            msg = "Specify a singular itemName as a character string.")
 
     if (!itemName %in% names(dgeObj))
         stop(paste(itemName, " does not exist within DGEresult.", sep = ""))
@@ -68,7 +68,7 @@ rmItem <- function(dgeObj, itemName){
 rmItems <- function(dgeObj, items){
     assertthat::assert_that(!missing(dgeObj),
                             !missing(items),
-                            msg = "Be sure to specify both a DGEobj and a character vector or list of items to remove.")
+                            msg = "Specify both a DGEobj and a character vector or list of items to remove.")
     assertthat::assert_that("DGEobj" %in% class(dgeObj),
                             msg = "The DGEobj must be of class 'DGEobj'.")
 

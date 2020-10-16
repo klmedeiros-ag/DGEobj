@@ -88,11 +88,11 @@ setAttributes <- function(item, attribs){
 
     assertthat::assert_that(!missing(item),
                             !missing(attribs),
-                            msg = "Be sure to specify an item and the attributes (attribs) to be attached to the item.")
+                            msg = "Specify both an item and the attributes (attribs) to be attached to the item.")
     assertthat::assert_that(class(attribs)[[1]] == "list",
                             msg = "attribs must be of class 'list'.")
     assertthat::assert_that(!is.null(names(attribs)),
-                            msg = "The attribs list should be a named list, specifying the attribute/value pairs. Be sure the names are specified.")
+                            msg = "The attribs list should be a named list, specifying the attribute/value pairs. It must have names specified.")
 
     attribNames <- as.list(names(attribs))
     for (i in 1:length(attribs))
@@ -131,7 +131,7 @@ setAttribute <- function(item, attrib, attribName) {
     assertthat::assert_that(!missing(item),
                             !missing(attrib),
                             !missing(attribName),
-                            msg = "Be sure to specify an item, the attribute (attrib), and the name of the attribute (attribName) to be attached to the item.")
+                            msg = "Specify an item, the attribute (attrib), and the name of the attribute (attribName) to be attached to the item.")
     assertthat::assert_that(class(attribName) == "character",
                             msg = "attribName must be of class 'character'.")
 

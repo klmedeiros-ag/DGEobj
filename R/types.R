@@ -22,7 +22,7 @@ baseType <- function(dgeObj, type){
 
     assertthat::assert_that(!missing(dgeObj),
                             !missing(type),
-                            msg = "Be sure to specify both a DGEobj and a type (to check the baseType). Both are required.")
+                            msg = "Specify both a DGEobj and a type (to check the baseType). Both are required.")
     assertthat::assert_that(class(dgeObj)[[1]] == "DGEobj",
                             msg = "The DGEobj must be of class 'DGEobj'.")
     assertthat::assert_that(class(type)[[1]] == "character",
@@ -135,7 +135,7 @@ newType <- function(dgeObj, itemType, baseType, uniqueItem = FALSE){
     assertthat::assert_that(!missing(dgeObj),
                             !missing(itemType),
                             !missing(baseType),
-                            msg = "Be sure to specify the DGEobj, itemType, and baseType. All three are required.")
+                            msg = "Specify the DGEobj, itemType, and baseType. All three are required.")
     assertthat::assert_that(class(dgeObj) == "DGEobj",
                             msg = "The DGEobj must be of class 'DGEobj'.")
     assertthat::assert_that(baseType %in% baseTypes(dgeObj),
