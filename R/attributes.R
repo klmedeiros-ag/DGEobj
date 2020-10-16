@@ -101,6 +101,44 @@ setAttributes <- function(item, attribs){
 }
 
 
+#' Function setAttribute
+#'
+#' Set one or more attributes on an object.  You can use this to add attribute
+#' annotation(s) to a DGEobj or to a specific item within a DGEobj. It will add
+#' the attribute but not delete any existing attributes, unlike the base attribute
+#' function.
+#'
+#' @param item  An object to attach attributes to
+#' @param attrib An attribute value to add to the item
+#' @param attribName A name for the attribute
+#'
+#' @return The item with the new attribute added and no existing attributes removed
+#'
+#' @examples
+#' \dontrun{
+#'    # Assign attribute to a DGEobj
+#'    MyDGEobj <- setAttribute(MyDGEobj, "RNA-SEQ", "Platform")
+#'
+#'    # Set attributes on an item inside a DGEobj
+#'    MyDGEObj[["counts"]] <- setAttribute(MyDGEObj[["counts"]], FALSE, "normalized")
+#' }
+#'
+#' @importFrom assertthat assert_that
+#'
+#' @export
+setAttribute <- function(item, attrib, attribName) {
+
+    assertthat::assert_that(!missing(item),
+                            !missing(attrib),
+                            !missing(attribName),
+                            msg = "Be sure to specify an item, the attribute (attrib), and the name of the attribute (attribName) to be attached to the item.")
+    assertthat::assert_that(class(attribName) == "character",
+                            msg = "attribName must be of class 'character'.")
+
+    attr(item, attribName) <- attrib
+    return(item)
+}
+
 #' Function getAttributes
 #'
 #' Get all attributes from an item except for any listed in the excludeList argument.
