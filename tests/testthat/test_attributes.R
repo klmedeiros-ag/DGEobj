@@ -25,7 +25,6 @@ test_that("attributes.R: setAttribute()/getAttribute()", {
     output         <- getAttribute(new_dgeobj, "new_attribute")
 
     expect_type(output, "character")
-
     expect_setequal(output, LETTERS)
 })
 
@@ -62,7 +61,5 @@ test_that("attributes.R: incorrect usage", {
     expect_null(getAttributes("fred"))
     expect_null(getAttributes(NULL))
     expect_null(getAttributes(list()))
-
     expect_null(getAttribute("fred", "fred"))
-
 })
