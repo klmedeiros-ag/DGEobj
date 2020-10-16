@@ -23,7 +23,7 @@ test_that('types.R: showTypes()', {
     expect_equal(length(showTypes_DGEobj), 50)
 
     warning('function does not appear to be working')
-    showTypes_notPretty_DGEobj <- DGEobj::showTypes(DGEobj, pretty = FALSE)
+    showTypes_notPretty_DGEobj <- showTypes(DGEobj, pretty = FALSE)
     expect_s3_class(showTypes_notPretty_DGEobj, "data.frame")
     expect_equal(nrow(showTypes_notPretty_DGEobj), 48)
     expect_equal(ncol(showTypes_notPretty_DGEobj), 2)
