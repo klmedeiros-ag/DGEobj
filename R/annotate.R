@@ -1,6 +1,6 @@
 #' Function annotateDGEobj
 #'
-#' Reads an annotation file  of key/value pairs and attach them attributes to a DGEobj.
+#' Reads an annotation file of key/value pairs and attach them attributes to a DGEobj.
 #' The annotation file should be a text file containing key/value pairs separated by an equals
 #' sign.  The keys parameter specifies which key we want to capture as
 #' attributes on the DGEobj. The value will then be the value of that attribute.
@@ -9,7 +9,7 @@
 #' @keywords RNA-Seq, DGEobj, annotation, attributes
 #'
 #' @param dgeObj  A class DGEobj created by function initDGEobj()
-#' @param annotationFile An Omicsoft registration file (in text format, not Excel)
+#' @param annotationFile A text file containing key/value pairs to add to the DGEobj.
 #' @param keys A list of keys to look for in the annotationFile and transfer to the DGEobj.
 #'    Use keys = NULL to accept all keys in the annotationFile (Default)
 #'
