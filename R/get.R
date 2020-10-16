@@ -115,8 +115,9 @@ getType <- function(dgeObj, type, parent){
 
     if (sum(idx) < length(type))
         warning("Some types were not found")
+
     if (sum(idx) == 0) {
-        tsmsg("Warning: no items of specified type are found.")
+        .tsmsg("Warning: no items of specified type are found.")
         return(NULL)
     } else {
         if (sum(idx) < length(type))

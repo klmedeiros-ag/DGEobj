@@ -41,6 +41,32 @@ dimnames.DGEobj <- function(x){
 }
 
 
+#' Function print.DGEobj
+#'
+#' Print a DGEobj object.
+#'
+#' @author John Thompson
+#' @keywords RNA-Seq
+#'
+#' @param x A DGEobj object
+#' @param ...     Additional parameters
+#' @param verbose Add funArgs to the output (Default = FALSE)
+#'
+#' @return NULL
+#'
+#' @examples
+#' \dontrun{
+#'     print(myDGEobj)
+#'     print(myDGEobj, verbose = TRUE)
+#' }
+#' @export
+print.DGEobj <- function(x, ..., verbose = FALSE) {
+    df <- inventory(x, verbose = verbose)
+    print(df)
+    return(invisible(x))
+}
+
+
 #' Function inventory
 #'
 #' Show the contents of a DGEobj object.  Note if an item is one-dimensional,

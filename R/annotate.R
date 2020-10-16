@@ -32,6 +32,8 @@
 #' @export
 annotateDGEobj <- function(dgeObj, regfile, keys = NULL) {
 
+    assert_that(file.exists(regfile))
+
     # Read lines, stripping quotes
     regdat <- utils::read.delim(regfile, sep = "\t",
                                 quote = "\"",
@@ -42,7 +44,7 @@ annotateDGEobj <- function(dgeObj, regfile, keys = NULL) {
     colnames(regdat) <- "pair"
 
     # Just lines with equals signs
-    regdat <- regdat[grepl("=", regdat$pair) | !grepl("Parameters.", regdat$pair),]
+    regdat <- regdat[grepl("=", regdat$pair) | !grepl("Parameters.", regdat$pair), , drop = FALSE]
 
     # Loop through the attributes spitting on the first = sign
     regdat$key <- ""

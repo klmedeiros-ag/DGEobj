@@ -19,6 +19,7 @@
 #' @param parent itemName of the parent of this item (optional, but your DGEobj
 #'   won't be well annotated if you don't use this wherever appropriate)
 #' @param init Default = FALSE. Used internally by the initDGEobj() function.
+#' @param debug Default = FALSE; TRUE trigger browser mode.
 #'
 #' @return A DGEobj class object with a new data item added.
 #'
@@ -42,47 +43,10 @@ addItem <- function(dgeObj,
                     funArgs = match.call(),
                     itemAttr,
                     parent = "",
-                    init = FALSE) {
+                    init = FALSE,
+                    debug = FALSE) {
 
-    assertthat::assert_that(!missing(dgeObj),
-                            !missing(item),
-                            !missing(itemName),
-                            !missing(itemType),
-                            msg = "Be sure to specify the DGEobj, item, itemName, and itemType.")
-
-    basetype <- baseType(dgeObj, type = itemType)
-
-    switch(basetype,
-           row = {if (!itemType == "granges" && is.null(rownames(item)))
-               stop("Row basetypes must have rownames")},
-           col = {if (is.null(rownames(item)))
-               stop("Col basetypes must have rownames")},
-           assay = {if (is.null(rownames(item)) || is.null(colnames(item)))
-               stop("Assay basetypes must have row and column names")}
-    )
-
-    allowedTypes <- names(attr(dgeObj, "objDef")$type)
-    if (!itemType %in% allowedTypes)
-        stop(paste("itemType must be one of: ",
-                   paste(allowedTypes, collapse = ", "), sep = ""))
-
-    if (overwrite == FALSE & itemName %in% names(dgeObj))
-        stop(stringr::str_c('itemName (', itemName, ') already exists in DGEobj!'))
-
-    uniqueTypes <- attr(dgeObj, "objDef")$uniqueType
-    if (itemType %in% uniqueTypes  &
-        itemType %in% attr(dgeObj, "type") &
-        overwrite == FALSE)
-        stop(paste("Only one instance of type ", itemType, " allowed.",
-                   " Use a base type instead (row, col, assay, meta),",
-                   " or define a new type.", sep = ""))
-
-    if (class(funArgs) == "call")
-        funArgs <- paste(funArgs[[1]], "(",
-                         paste(funArgs[2:length(funArgs)], collapse = ", "),
-                         ")", sep = "")
-
-    # helper function
+    # helper functions
     .dimensionMatch <- function(dgeObj, item, itemType){
         testrow <- function(dgeObj, item){
             if (is.null(dim(item))) {
@@ -116,12 +80,6 @@ addItem <- function(dgeObj,
         return(result)
     }
 
-    if (init == FALSE) {
-        if (.dimensionMatch(dgeObj, item, itemType) == FALSE)
-            stop(stringr::str_c("item doesn't match dimension of DGEobj [", itemName, "]"))
-    }
-
-    # helper function
     .checkDimnames <- function(dgeObj, item, basetype){
         result <- TRUE
         result <- switch(basetype,
@@ -134,7 +92,50 @@ addItem <- function(dgeObj,
         return(result)
     }
 
+    assert_that(!missing(dgeObj),
+                !missing(item),
+                !missing(itemName),
+                !missing(itemType),
+                itemType %in% names(attr(dgeObj, "objDef")$type))
+
+    if (debug == TRUE) browser()
+
+    basetype <- baseType(dgeObj, type = itemType)
+
+    switch(basetype,
+           row = {if (!itemType == "granges" && is.null(rownames(item)))
+               stop("Row basetypes must have rownames")},
+           col = {if (is.null(rownames(item)))
+               stop("Col basetypes must have rownames")},
+           assay = {if (is.null(rownames(item)) || is.null(colnames(item)))
+               stop("Assay basetypes must have row and column names")}
+    )
+
+    allowedTypes <- names(attr(dgeObj, "objDef")$type)
+    if (!itemType %in% allowedTypes)
+        stop(paste("itemType must be one of: ",
+                   paste(allowedTypes, collapse = ", "), sep = ""))
+
+    if (overwrite == FALSE & itemName %in% names(dgeObj))
+        stop(stringr::str_c('itemName (', itemName, ') already exists in DGEobj!'))
+
+    uniqueTypes <- attr(dgeObj, "objDef")$uniqueType
+    if (itemType %in% uniqueTypes  &
+        itemType %in% attr(dgeObj, "type") &
+        overwrite == FALSE)
+        stop(paste("Only one instance of type ", itemType, " allowed.",
+                   " Use a base type instead (row, col, assay, meta),",
+                   " or define a new type.", sep = ""))
+
+    if (class(funArgs) == "call")
+        funArgs <- paste(funArgs[[1]], "(",
+                         paste(funArgs[2:length(funArgs)], collapse = ", "),
+                         ")", sep = "")
+
     if (init == FALSE) {
+        if (.dimensionMatch(dgeObj, item, itemType) == FALSE)
+            stop(stringr::str_c("item doesn't match dimension of DGEobj [", itemName, "]"))
+
         if (!.checkDimnames(dgeObj, item = item, basetype = basetype))
             stop("item row and/or column names out of order with DGEobj")
     }
