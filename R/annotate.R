@@ -27,8 +27,8 @@
 #' @export
 annotateDGEobj <- function(dgeObj, annotationFile, keys = NULL) {
 
-    assert_that(file.exists(annotationFile),
-                msg = "You must provide an annotation text file (annotationFile) which contains key/value pairs separated by an equals sign.")
+    assertthat::assert_that(file.exists(annotationFile),
+                            msg = "You must provide an annotation text file (annotationFile) which contains key/value pairs separated by an equals sign.")
 
     # Read lines, stripping quotes
     regdat <- utils::read.delim(annotationFile, sep = "\t",
