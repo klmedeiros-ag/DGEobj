@@ -13,7 +13,8 @@ addItem(
   funArgs = match.call(),
   itemAttr,
   parent = "",
-  init = FALSE
+  init = FALSE,
+  debug = FALSE
 )
 }
 \arguments{

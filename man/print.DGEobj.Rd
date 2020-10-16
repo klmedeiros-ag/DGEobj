@@ -5,6 +5,8 @@
 \title{Function print.DGEobj}
 \usage{
 \method{print}{DGEobj}(x, ..., verbose = FALSE)
+
+\method{print}{DGEobj}(x, ..., verbose = FALSE)
 }
 \arguments{
 \item{x}{A DGEobj object}
@@ -15,14 +17,22 @@
 }
 \description{
 Print a DGEobj object.
+
+Print a DGEobj object.
 }
 \examples{
 \dontrun{
     print(myDGEobj)
     print(myDGEobj, verbose = TRUE)
 }
+\dontrun{
+    print(myDGEobj)
+    print(myDGEobj, verbose = TRUE)
+}
 }
 \author{
+John Thompson
+
 John Thompson
 }
 \keyword{RNA-Seq}
