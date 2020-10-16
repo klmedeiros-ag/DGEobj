@@ -10,10 +10,10 @@ baseTypes(dgeObj)
 \item{dgeObj}{A class DGEobj object}
 }
 \value{
-A list of basetypes
+A list of baseTypes
 }
 \description{
-Return a list of the available basetypes in a DGEobj.
+Return a list of the available baseTypes in a DGEobj.
 }
 \examples{
 \dontrun{

@@ -16,7 +16,7 @@ A simple list of data items
 }
 \description{
 Accessor function for DGEobj class objects.  Retrieves all data items of a
-given basetype or list of basetypes.
+given baseType or list of baseTypes.
 }
 \examples{
 \dontrun{

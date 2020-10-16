@@ -22,7 +22,7 @@ mount a S3 bucket to a local folder path.}
 \item{counts}{A matrix or dataframe of R genes by C samples (required)
 [Default = "RNA-Seq.Count.Table.txt"]}
 
-\item{seqAnnotation}{Gene, isoform or exon level (row) annotation (required)
+\item{seqAnnotation}{Gene, isoform, or exon level (row) annotation (required)
 [Default = "RNA-Seq.Count.Annotation.txt"]}
 
 \item{design}{Sample annotation with expt factors and other sample-associated
@@ -58,20 +58,20 @@ If possible, the sequence annotation should include chromosome position data (ch
 start, end, strand).
 
 Sample annotation must have one row for each column in the count table.
-rownames(sampleannotation) == colnames(counts).
+rownames(sampleAnnotation) == colnames(counts).
 
 Function DGEobj::annotateDGEobj reads key=value pairs from a text file to define
 attributes.
 
-For sequence annotation: The gene ID (Ensembl ID in our case) is used as the
-rowname.  The following fields are also included: "GeneName" (GeneSymbol),
+For sequence annotation: The gene ID is used as the
+row name.  The following fields are also included: "GeneName" (GeneSymbol),
 "Transcript." (transcript#), "Strand", "Chromosome", "Start", "End",
-"ExonLength (sum of exons)", "Source" (Ensembl Source field), "IsConfounded"
+"ExonLength" (sum of exons), "Source", "IsConfounded"
 (overlaps another gene).
 
 Certain downstream functionality depends on specific sequence annotation
 fields.  For example, Chromosome, Start, End and Strand are required to build
-a genomicRanges object.  And many people depend on the source field to filter
+a GenomicRanges object.  And many people depend on the source field to filter
 for protein-coding genes.  So you can probably build a DGEobj with any old annotation file.
 But minimally adhering to these columns of data will insure operability with downstream
 tools.

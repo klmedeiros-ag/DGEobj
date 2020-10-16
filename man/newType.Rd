@@ -11,7 +11,7 @@ newType(dgeObj, itemType, baseType, uniqueItem = FALSE)
 
 \item{itemType}{The name of the new type to create}
 
-\item{baseType}{The basetype of the new item. One of [row, col, assay, meta]}
+\item{baseType}{The baseType of the new item. One of [row, col, assay, meta]}
 
 \item{uniqueItem}{If set to TRUE, only one instance of the new type is
 allowed in a DGEobj}
@@ -20,7 +20,7 @@ allowed in a DGEobj}
 A DGEobj with a new type definition embedded
 }
 \description{
-Used to customize a DGEobj definition by adding new types.  A basetype
+Used to customize a DGEobj definition by adding new types.  A baseType
 is also declared and whether more than a single instance is allowed.
 }
 \examples{

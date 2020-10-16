@@ -9,13 +9,13 @@ baseType(dgeObj, type)
 \arguments{
 \item{dgeObj}{A class DGEobj created by function initDGEobj()}
 
-\item{type}{An item type for which you want the basetype}
+\item{type}{An item type for which you want the baseType}
 }
 \value{
-A basetype value (character string)
+A baseType value (character string)
 }
 \description{
-Return the basetype for a given item type in a DGEobj.
+Return the baseType for a given item type in a DGEobj.
 }
 \examples{
 \dontrun{
