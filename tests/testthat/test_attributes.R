@@ -22,12 +22,11 @@ test_that("attributes.R: setAttributes()/getAttributes()", {
 
 test_that("attributes.R: setAttribute()/getAttribute()", {
     new_dgeobj     <- setAttribute(DGEobj, LETTERS, "new_attribute")
-    output         <- getAttributes(new_dgeobj)
+    output         <- getAttribute(new_dgeobj, "new_attribute")
 
-    expect_type(output, "list")
+    expect_type(output, "character")
 
-    expect_true(exists("new_attribute", where = output))
-    expect_setequal(output$new_attribute, LETTERS)
+    expect_setequal(output, LETTERS)
 })
 
 test_that("attributes.R: getAttributes() returns all", {
