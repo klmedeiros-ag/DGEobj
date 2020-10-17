@@ -1,62 +1,78 @@
 #' Function annotateDGEobj
 #'
-#' Reads an annotation file of key/value pairs and attach them attributes to a DGEobj.
+#' Reads an annotation file of key/value pairs or a named list and attaches them attributes to a DGEobj.
 #' The annotation file should be a text file containing key/value pairs separated by an equals
-#' sign.  The keys parameter specifies which key we want to capture as
+#' sign. The keys parameter specifies which key we want to capture as
 #' attributes on the DGEobj. The value will then be the value of that attribute.
 #'
 #' @author John Thompson
 #' @keywords RNA-Seq, DGEobj, annotation, attributes
 #'
 #' @param dgeObj  A class DGEobj created by function initDGEobj()
-#' @param annotationFile A text file containing key/value pairs to add to the DGEobj.
-#' @param keys A list of keys to look for in the annotationFile and transfer to the DGEobj.
-#'    Use keys = NULL to accept all keys in the annotationFile (Default)
+#' @param annotations A character string location to a text file with annotations given as key/value
+#'    pairs, separated by an equal sign, or a named list of key/value pairs.
+#' @param keys A list of keys to look for in the annotations and transfer to the DGEobj.
+#'    Use keys = NULL to accept all keys in the annotations (Default)
 #'
 #' @return A DGEobj annotated with attributes from the annotation file.
 #'
 #' @examples
 #' \dontrun{
-#'    MyDgeObj <- annotateDGEobj(DGEobj, annotationFile)
+#'    MyDgeObj <- annotateDGEobj(DGEobj, annotations)
 #' }
 #'
 #' @import magrittr
 #' @importFrom stringr str_detect str_remove_all str_locate
 #' @importFrom utils read.delim
+#' @importFrom stats setNames
 #'
 #' @export
-annotateDGEobj <- function(dgeObj, annotationFile, keys = NULL) {
+annotateDGEobj <- function(dgeObj, annotations, keys = NULL) {
 
-    assertthat::assert_that(file.exists(annotationFile),
-                            msg = "You must provide an annotation text file (annotationFile) which contains key/value pairs separated by an equals sign.")
+    if (class(annotations) == "character") {
+        assertthat::assert_that(file.exists(annotations),
+                                msg = "You must provide an annotation text file (annotations) which contains key/value pairs separated by an equals sign.")
 
-    # Read lines, stripping quotes
-    regdat <- utils::read.delim(annotationFile, sep = "\t",
-                                quote = "\"",
-                                stringsAsFactors = FALSE,
-                                header = FALSE)
-    # Just first column
-    regdat <- regdat[,1, drop = FALSE]
-    colnames(regdat) <- "pair"
+        # Read lines, stripping quotes
+        regdat <- utils::read.delim(annotations, sep = "\t",
+                                    quote = "\"",
+                                    stringsAsFactors = FALSE,
+                                    header = FALSE)
 
-    # Just lines with equals signs
-    regdat <- regdat[grepl("=", regdat$pair) | !grepl("Parameters.", regdat$pair), , drop = FALSE]
+        # Just first column
+        regdat <- regdat[, 1, drop = FALSE]
+        colnames(regdat) <- "pair"
 
-    # Loop through the attributes spitting on the first = sign
-    regdat$key <- ""
-    regdat$value <- ""
-    for (i in 1:nrow(regdat)) {
-        splitpos <- str_locate(regdat[i,1], "=")[1]  # Pos of 1st = sign
-        regdat$key[i] <- substr(regdat[i,1], 1, (splitpos - 1))
-        regdat$value[i] <- substr(regdat[i,1], (splitpos + 1), nchar(regdat[i,1]))
+        # Just lines with equals signs
+        regdat <- regdat[grepl("=", regdat$pair) | !grepl("Parameters.", regdat$pair), , drop = FALSE]
+
+        # Loop through the attributes spitting on the first = sign
+        regdat$key <- ""
+        regdat$value <- ""
+        for (i in 1:nrow(regdat)) {
+            splitpos <- str_locate(regdat[i,1], "=")[1]  # Pos of 1st = sign
+            regdat$key[i] <- substr(regdat[i,1], 1, (splitpos - 1))
+            regdat$value[i] <- substr(regdat[i,1], (splitpos + 1), nchar(regdat[i,1]))
+        }
+
+        # After splitting, key without values get the key names inserted as the value. Convert those to empty strings.
+        idx <- regdat$key == regdat$value
+        regdat$value[idx] <- ""
+
+        # Squeeze spaces out of keys
+        regdat$key <- stringr::str_remove_all(regdat$key, " ")
+
+    } else {
+        assertthat::assert_that(class(annotations) == "list")
+        assertthat::assert_that(length(names(annotations)) == length(annotations))
+
+        # if list, turn into a df
+        regdat <- stats::setNames(data.frame(matrix(ncol = 2, nrow = length(annotations))), c("key", "value"))
+        for (i in 1:length(annotations)) {
+            regdat$key[i] <- names(annotations)[i]
+            regdat$value[i] <- annotations[[i]]
+        }
     }
-
-    # After splitting, key without values get the key names inserted as the value. Convert those to empty strings.
-    idx <- regdat$key == regdat$value
-    regdat$value[idx] <- ""
-
-    # Squeeze spaces out of keys
-    regdat$key <- stringr::str_remove_all(regdat$key, " ")
 
     # Capture/preserve the existing attributes
     MyAttribs <- attributes(dgeObj)
