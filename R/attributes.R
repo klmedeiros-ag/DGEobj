@@ -96,9 +96,7 @@ setAttributes <- function(item, attribs){
 
     attribNames <- as.list(names(attribs))
     for (i in 1:length(attribs))
-        setAttribute(item, attribs[[i]], attribNames[[i]])
-
-        # attr(item, attribNames[[i]]) <- attribs[[i]]
+        item <- setAttribute(item, attribs[[i]], attribNames[[i]])
     return(item)
 }
 
@@ -129,7 +127,7 @@ setAttributes <- function(item, attribs){
 #'
 #' @export
 setAttribute <- function(item, attrib, attribName) {
-    browser()
+
     assertthat::assert_that(!missing(item),
                             !missing(attrib),
                             !missing(attribName),
