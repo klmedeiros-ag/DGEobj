@@ -96,17 +96,19 @@ setAttributes <- function(item, attribs){
 
     attribNames <- as.list(names(attribs))
     for (i in 1:length(attribs))
-        attr(item, attribNames[[i]]) <- attribs[[i]]
+        setAttribute(item, attribs[[i]], attribNames[[i]])
+
+        # attr(item, attribNames[[i]]) <- attribs[[i]]
     return(item)
 }
 
 
 #' Function setAttribute
 #'
-#' Set one or more attributes on an object.  You can use this to add attribute
-#' annotation(s) to a DGEobj or to a specific item within a DGEobj. It will add
-#' the attribute but not delete any existing attributes, unlike the base attribute
-#' function.
+#' Set an attribute on an object.  You can use this to add attribute
+#' annotation(s) to a DGEobj or to a specific item within a DGEobj.
+#' The function is generic in that it should work on other data types/classes,
+#' not just a DGEobj.
 #'
 #' @param item  An object to attach attributes to
 #' @param attrib An attribute value to add to the item
@@ -127,7 +129,7 @@ setAttributes <- function(item, attribs){
 #'
 #' @export
 setAttribute <- function(item, attrib, attribName) {
-
+    browser()
     assertthat::assert_that(!missing(item),
                             !missing(attrib),
                             !missing(attribName),
