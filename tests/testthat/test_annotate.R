@@ -13,6 +13,16 @@ test_that('annotate.R: annotateDGEobj()', {
     ann_DGEobj <- annotateDGEobj(DGEobj, ann.file, keys = list("key2"))
     expect_null(getAttribute(ann_DGEobj, 'key1'))
     expect_equal(getAttribute(ann_DGEobj, 'key2'), 'value 2')
+
+    ann.list <- list("key1" = "'value 1'", "key2" = "value 2")
+    ann_DGEobj <- annotateDGEobj(DGEobj, ann.list)
+    expect_equal(getAttribute(ann_DGEobj, 'key1'), "'value 1'")
+    expect_equal(getAttribute(ann_DGEobj, 'key2'), 'value 2')
+    expect_null(getAttribute(ann_DGEobj, 'key3'))
+
+    ann_DGEobj <- annotateDGEobj(DGEobj, ann.list, keys = list("key2"))
+    expect_null(getAttribute(ann_DGEobj, 'key1'))
+    expect_equal(getAttribute(ann_DGEobj, 'key2'), 'value 2')
 })
 
 test_that('annotate.R: incorrect usage', {
