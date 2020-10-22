@@ -4,28 +4,29 @@
 \alias{annotateDGEobj}
 \title{Function annotateDGEobj}
 \usage{
-annotateDGEobj(dgeObj, annotationFile, keys = NULL)
+annotateDGEobj(dgeObj, annotations, keys = NULL)
 }
 \arguments{
 \item{dgeObj}{A class DGEobj created by function initDGEobj()}
 
-\item{annotationFile}{An Omicsoft registration file (in text format, not Excel)}
+\item{annotations}{A character string location to a text file with annotations given as key/value
+pairs separated by an equal sign, or a named list of key/value pairs.}
 
-\item{keys}{A list of keys to look for in the annotationFile and transfer to the DGEobj.
-Use keys = NULL to accept all keys in the annotationFile (Default)}
+\item{keys}{A list of keys to look for in the annotations and transfer to the DGEobj.
+Use keys = NULL to accept all keys in the annotations (Default)}
 }
 \value{
 A DGEobj annotated with attributes from the annotation file.
 }
 \description{
-Reads an annotation file  of key/value pairs and attach them attributes to a DGEobj.
-The annotation file should be a text file containing key/value pairs separated by an equals
-sign.  The keys parameter specifies which key we want to capture as
+Reads an annotation file of key/value pairs or a named list and attaches them attributes to a DGEobj.
+If a file is used, it should be a text file containing key/value pairs separated by an equals
+sign. The keys parameter specifies which key we want to capture as
 attributes on the DGEobj. The value will then be the value of that attribute.
 }
 \examples{
 \dontrun{
-   MyDgeObj <- annotateDGEobj(DGEobj, annotationFile)
+   MyDgeObj <- annotateDGEobj(DGEobj, annotations)
 }
 
 }

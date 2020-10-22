@@ -17,10 +17,10 @@ setAttribute(item, attrib, attribName)
 The item with the new attribute added and no existing attributes removed
 }
 \description{
-Set one or more attributes on an object.  You can use this to add attribute
-annotation(s) to a DGEobj or to a specific item within a DGEobj. It will add
-the attribute but not delete any existing attributes, unlike the base attribute
-function.
+Set an attribute on an object.  You can use this to add attribute
+annotation(s) to a DGEobj or to a specific item within a DGEobj.
+The function is generic in that it should work on other data types/classes,
+not just a DGEobj.
 }
 \examples{
 \dontrun{
