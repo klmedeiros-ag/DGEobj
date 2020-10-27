@@ -21,8 +21,11 @@ test_that("attributes.R: setAttributes()/getAttributes()", {
 })
 
 test_that("attributes.R: setAttribute()/getAttribute()", {
-    # TBD once setAttribute is ready
-    # Pair with getAttribute for that specific attribute
+    new_dgeobj     <- setAttribute(DGEobj, LETTERS, "new_attribute")
+    output         <- getAttribute(new_dgeobj, "new_attribute")
+
+    expect_type(output, "character")
+    expect_setequal(output, LETTERS)
 })
 
 test_that("attributes.R: getAttributes() returns all", {
@@ -63,6 +66,5 @@ test_that("attributes.R: incorrect usage", {
     expect_null(getAttributes("fred"))
     expect_null(getAttributes(NULL))
     expect_null(getAttributes(list()))
-
     expect_null(getAttribute("fred", "fred"))
 })
