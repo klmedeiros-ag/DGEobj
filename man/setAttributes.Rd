@@ -21,8 +21,6 @@ The setAttributes() function adds the attributes passed to it in
 the attribs argument without deleting attributes already present. To remove an attribute,
 you can pass NULL as the value. Any named attribute on the attribs argument list
 that already exists in the object will be updated.
-The function is generic in that it should work on other data types/classes,
-not just a DGEobj.
 }
 \examples{
 \dontrun{
