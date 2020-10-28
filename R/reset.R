@@ -33,9 +33,8 @@ resetDGEobj <- function(dgeObj, platformType){
                             "The DGEobj must be of class 'DGEobj'.")
     assertthat::assert_that(!is.null(attr(dgeObj, "level")),
                             "The DGEobj must have a 'level' attribute specified.")
-
-    if (is.null(attr(dgeObj, "PlatformType")))
-        stop("Required attribute \"PlatformType\" is missing!  Must use platformType argument.")
+    assertthat::assert_that(is.null(attr(dgeObj, "PlatformType")),
+                            msg = "Required attribute \"PlatformType\" is missing!  Must use platformType argument.")
 
     metaList <- getBaseType(dgeObj, "meta")[1:3]
 

@@ -27,10 +27,10 @@ test_that('annotate.R: annotateDGEobj()', {
 
 test_that('annotate.R: incorrect usage', {
     expect_error(annotateDGEobj(DGEobj),
-                 regexp = "argument \"regfile\" is missing, with no default",
+                 regexp = "argument \"annotations\" is missing, with no default",
                  fixed  = TRUE)
     expect_error(annotateDGEobj(DGEobj, NULL),
-                 regexp = "invalid 'file' argument")
+                 regexp = "When annotations is NULL, no attribute gets added to the dgeObj.")
     expect_error(annotateDGEobj(DGEobj, "nonexistantfile.txt"),
-                 regexp = "Path 'nonexistantfile.txt' does not exist")
+                 regexp = "The file specified does not exist.")
 })

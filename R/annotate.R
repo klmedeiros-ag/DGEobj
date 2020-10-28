@@ -31,7 +31,7 @@ annotateDGEobj <- function(dgeObj, annotations, keys = NULL) {
 
     if (class(annotations) == "character") {
         assertthat::assert_that(file.exists(annotations),
-                                msg = "You must provide an annotation text file (annotations) which contains key/value pairs separated by an equals sign.")
+                                msg = "The file specified does not exist.")
 
         # Read lines, stripping quotes
         regdat <- utils::read.delim(annotations, sep = "\t",
@@ -43,8 +43,8 @@ annotateDGEobj <- function(dgeObj, annotations, keys = NULL) {
         regdat <- regdat[, 1, drop = FALSE]
         colnames(regdat) <- "pair"
 
-        # Just lines with equals signs
-        regdat <- regdat[grepl("=", regdat$pair) | !grepl("Parameters.", regdat$pair), , drop = FALSE]
+        # Just lines with equals signs, no commented out lines
+        regdat <- regdat[grepl("=", regdat$pair) | !grepl("Parameters.", regdat$pair) | grepl("^#", regdat$pair), , drop = FALSE]
 
         # Loop through the attributes spitting on the first = sign
         regdat$key <- ""
@@ -62,9 +62,11 @@ annotateDGEobj <- function(dgeObj, annotations, keys = NULL) {
         # Squeeze spaces out of keys
         regdat$key <- stringr::str_remove_all(regdat$key, " ")
 
-    } else {
-        assertthat::assert_that(class(annotations) == "list")
-        assertthat::assert_that(length(names(annotations)) == length(annotations))
+    } else if (class(annotations) == "list") {
+        assertthat::assert_that(class(annotations) == "list",
+                                msg = "annotations should be a named list of key/value pairs.")
+        assertthat::assert_that(length(names(annotations)) == length(annotations),
+                                msg = "annotations should be a named list of key/value pairs.")
 
         # if list, turn into a df
         regdat <- stats::setNames(data.frame(matrix(ncol = 2, nrow = length(annotations))), c("key", "value"))
@@ -72,6 +74,9 @@ annotateDGEobj <- function(dgeObj, annotations, keys = NULL) {
             regdat$key[i] <- names(annotations)[i]
             regdat$value[i] <- annotations[[i]]
         }
+    } else {
+        assertthat::assert_that(is.null(class(annotations)),
+                                msg = "When annotations is NULL, no attribute gets added to the dgeObj.")
     }
 
     # Capture/preserve the existing attributes

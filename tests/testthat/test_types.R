@@ -48,12 +48,12 @@ test_that('types.R: incorrect usage', {
                  regexp = "argument \"dgeObj\" is missing, with no default",
                  fixed  = TRUE)
     expect_error(newType(),
-                 regexp = "!missing(dgeObj) is not TRUE",
+                 regexp = "Specify the DGEobj, itemType, and baseType. All three are required.",
                  fixed  = TRUE)
     expect_error(newType(DGEobj),
-                 regexp = "!missing(itemType) is not TRUE",
+                 regexp = "Specify the DGEobj, itemType, and baseType. All three are required.",
                  fixed  = TRUE)
     expect_error(newType(DGEobj, "MyType", "badType"),
-                 regexp = "`%in%`(x = baseType, table = baseTypes(dgeObj)) is not TRUE",
+                 regexp = "The baseType must be one of the baseTypes available in the DGEobj. Use baseTypes(DGEobj) to see which are available.",
                  fixed  = TRUE)
 })
