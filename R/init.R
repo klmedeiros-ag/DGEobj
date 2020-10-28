@@ -93,9 +93,9 @@ initDGEobj <- function(counts,
             minchar <- nchar(as.character(sampleCount))
             maxchar <- max(sapply(rownames(colData), nchar))
             assertthat::assert_that(maxchar > minchar,
-                                    msg = str_c("It looks like you have numeric sample IDs (design rownames).",
+                                    msg = paste("It looks like you have numeric sample IDs (design rownames).",
                                                 "Please supply a more specific sample identifier. ",
-                                                "Use allowShortSampleIDs = TRUE to explicitily override this restriction",
+                                                "Use allowShortSampleIDs = TRUE to explicitly override this restriction",
                                                 sep = "\n"))
         }
     }

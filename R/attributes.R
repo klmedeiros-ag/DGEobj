@@ -52,8 +52,6 @@ showAttributes <- function(dgeObj,
 #' the attribs argument without deleting attributes already present. To remove an attribute,
 #' you can pass NULL as the value. Any named attribute on the attribs argument list
 #' that already exists in the object will be updated.
-#' The function is generic in that it should work on other data types/classes,
-#' not just a DGEobj.
 #'
 #' @author John Thompson
 #' @keywords RNA-Seq, DGEobj
@@ -105,8 +103,6 @@ setAttributes <- function(item, attribs){
 #'
 #' Set an attribute on an object.  You can use this to add attribute
 #' annotation(s) to a DGEobj or to a specific item within a DGEobj.
-#' The function is generic in that it should work on other data types/classes,
-#' not just a DGEobj.
 #'
 #' @param item  An object to attach attributes to
 #' @param attrib An attribute value to add to the item

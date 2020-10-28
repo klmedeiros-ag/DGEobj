@@ -156,7 +156,9 @@ convertRSE <- function(RSE,
 
     assertthat::assert_that(!missing(RSE),
                             !missing(Class),
-                            msg = "Specify both a DGEobj and a desired Class to convert the DGEobj to.")
+                            msg = "Specify both a RSE and a desired Class to convert the RSE to.")
+    assertthat::assert_that(Class %in% c("DGEobj", "ES", "ExpressionSet"),
+                            msg = 'The destination class must be one of "DGEobj", "ES", or "ExpressionSet".')
     assertthat::assert_that(class(RSE)[[1]] == "RangedSummarizedExperiment",
                             msg = "The RSE must be of class 'RangedSummarizedExperiment'.")
 

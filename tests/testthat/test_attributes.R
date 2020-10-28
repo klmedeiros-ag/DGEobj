@@ -55,10 +55,10 @@ test_that("attributes.R: showMeta()", {
 
 test_that("attributes.R: incorrect usage", {
     expect_error(setAttributes(DGEobj, attribs = NULL),
-                 regexp = "class(attribs)[[1]] not equal to \"list\"",
+                 regexp = "attribs must be of class 'list'.",
                  fixed  = TRUE)
     expect_error(setAttributes(DGEobj, attribs = list()),
-                 regexp = "!is.null(names(attribs)) is not TRUE",
+                 regexp = "The attribs list should be a named list, specifying the attribute/value pairs. It must have names specified.",
                  fixed  = TRUE)
     expect_error(getAttribute(DGEobj, NULL),
                  regexp = "'which' must be of mode character")

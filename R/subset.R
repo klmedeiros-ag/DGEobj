@@ -30,7 +30,7 @@
 subset.DGEobj <- function(x, ..., row, col, drop = FALSE, debug = FALSE){
 
     assertthat::assert_that(class(x)[[1]] == "DGEobj",
-                            msg = "The DGEobj must be of class 'DGEobj'.")
+                            msg = "x must be of class 'DGEobj'.")
 
     # Fill in missing row/col args
     if (missing(row))
